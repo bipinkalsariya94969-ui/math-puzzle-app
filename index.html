@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0">
+  <title>MathMind – Mental Math Master</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#f4b400">
+</head>
+<body>
+  <div id="app-root">
+    <div id="screen-splash" class="screen full-center active">
+      <div class="splash-content">
+        <h1 class="splash-logo">MathMind</h1>
+        <div class="splash-loader"></div>
+      </div>
+    </div>
+
+    <!-- AUTH: LOGIN -->
+    <div id="screen-login" class="screen full-center">
+      <div class="auth-card">
+        <h2>Welcome Back 👋</h2><p class="auth-sub">Log in to track your progress</p>
+        <button class="btn google-btn ripple" onclick="loginWithGoogle()">Continue with Google</button>
+        <div class="or-divider"><span>OR</span></div>
+        <div class="input-group"><label>Email Address</label><input type="email" id="login-email" placeholder="alex@example.com"></div>
+        <div class="input-group"><label>Password</label><input type="password" id="login-pass" placeholder="••••••••"></div>
+        <button class="btn-primary ripple" onclick="login()">Login</button>
+        <p class="auth-link" onclick="navTo('screen-signup')">Don't have an account? <span>Sign Up</span></p>
+      </div>
+    </div>
+
+    <!-- AUTH: SIGNUP -->
+    <div id="screen-signup" class="screen full-center">
+      <div class="auth-card">
+        <h2>Create Account 🚀</h2><p class="auth-sub">Join the MathMind community</p>
+        <button class="btn google-btn ripple" onclick="loginWithGoogle()">Continue with Google</button>
+        <div class="or-divider"><span>OR</span></div>
+        <div class="input-group"><label>Full Name</label><input type="text" id="signup-name" placeholder="Alex Johnson"></div>
+        <div class="input-group"><label>Email Address</label><input type="email" id="signup-email" placeholder="alex@example.com"></div>
+        <div class="input-group"><label>Password</label><input type="password" id="signup-pass" placeholder="••••••••"></div>
+        <button class="btn-primary ripple" onclick="register()">Sign Up</button>
+        <p class="auth-link" onclick="navTo('screen-login')">Already have an account? <span>Login</span></p>
+      </div>
+    </div>
+
+    <!-- HOME SCREEN -->
+    <div id="screen-home" class="screen has-footer">
+      <div class="app-header">
+        <div class="header-left"><h1 class="logo-small">MathMind</h1><p class="user-greeting">Good Morning, <span id="user-display-name">Guest</span> 👋</p></div>
+        <div class="header-right"><div class="header-user" onclick="openSettings()"><div class="header-score">🏆 <span id="user-total-score">0</span></div><img id="header-avatar" src="" class="h-avatar" alt="👤"></div></div>
+      </div>
+      <div class="scroll-area">
+        <div class="streak-card">
+          <div class="streak-left"><div class="streak-val" id="user-streak-val">🔥 1</div><div class="streak-lbl">Day Streak</div></div>
+          <div class="streak-right">
+            <div class="streak-p-label">Daily Goal <span id="user-streak-percent">0% complete</span></div>
+            <div class="streak-bar"><div class="streak-fill" id="user-streak-fill" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div class="cat-section">
+          <div class="section-header"><h3>All Games</h3><button class="icon-btn" onclick="toggleTheme()">🌙</button></div>
+          <div class="flex-col gap-20">
+            <!-- Math Puzzle -->
+            <div class="main-cat-card brand-y" onclick="navTo('screen-menu-math')">
+              <div class="main-cat-text">
+                <h2>Math Puzzle</h2>
+                <p>Train your brain, improve math</p>
+              </div>
+              <div class="main-cat-icon">🧩</div>
+            </div>
+            <!-- Memory Puzzle -->
+            <div class="main-cat-card brand-g" onclick="navTo('screen-menu-memory')">
+              <div class="main-cat-text">
+                <h2>Memory Puzzle</h2>
+                <p>Memorise numbers & signs</p>
+              </div>
+              <div class="main-cat-icon">💡</div>
+            </div>
+            <!-- Train Your Brain -->
+            <div class="main-cat-card brand-p" onclick="navTo('screen-menu-brain')">
+              <div class="main-cat-text">
+                <h2>Train Your Brain</h2>
+                <p>Enhance core cognitive skills</p>
+              </div>
+              <div class="main-cat-icon">🧠</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-nav">
+        <div class="f-item active" onclick="navTo('screen-home')">🏠<span></span></div>
+        <div class="f-item" onclick="navTo('screen-leaderboard')">🏆<span></span></div>
+        <div class="f-item" onclick="openSettings()">⚙️<span></span></div>
+      </div>
+    </div>
+
+    <!-- MATH MENU -->
+    <div id="screen-menu-math" class="screen">
+      <div class="game-top"><button class="back-btn" onclick="navTo('screen-home')">←</button><span class="game-score-pill">🏆 <span id="m-score">0</span></span><button class="icon-btn" style="border:2px solid;box-shadow:2px 2px 0;" onclick="openSettings()">⚙️</button></div>
+      <div class="scroll-area"><h1 class="cat-title-big">Math Puzzle</h1><p class="cat-subtitle">Each game with simple calculation with different approach</p>
+        <div class="cat-grid" style="margin-top:20px;">
+          <div class="sub-game-card brand-y" onclick="window.openGame('calculator')"><div class="sub-icon">🧮</div><h4>Calculator</h4><div class="sub-score">🏆 0</div><button class="sub-play-btn">Play</button></div>
+          <div class="sub-game-card brand-y" onclick="window.openGame('guess_sign')"><div class="sub-icon">❓</div><h4>Guess the sign?</h4><div class="sub-score">🏆 0</div><button class="sub-play-btn">Play</button></div>
+          <div class="sub-game-card brand-y" onclick="window.openGame('calculator')"><div class="sub-icon">📝</div><h4>Correct answer</h4><div class="sub-score">🏆 0</div><button class="sub-play-btn">Play</button></div>
+          <div class="sub-game-card brand-y" onclick="window.openGame('quick_calc')"><div class="sub-icon">⚡</div><h4>Quick calculation</h4><div class="sub-score">🏆 0</div><button class="sub-play-btn">Play</button></div>
+        </div></div></div>
+    
+    <!-- MEMORY MENU -->
+    <div id="screen-menu-memory" class="screen">
+      <div class="game-top"><button class="back-btn" onclick="navTo('screen-home')">←</button><span class="game-score-pill">🏆 <span id="mem-score">0</span></span><button class="icon-btn" style="border:2px solid #1A1A2E;box-shadow:2px 2px 0 #1A1A2E" onclick="openSettings()">⚙️</button></div>
+      <div class="scroll-area"><h1 class="cat-title-big">Memory Puzzle</h1><p class="cat-subtitle">Memorise numbers & signs before applying calculation to them.</p>
+        <div class="cat-grid" style="margin-top:20px;">
+          <div class="sub-game-card brand-g" onclick="window.openGame('mental_arithmetic')"><div class="sub-icon">🧩</div><h4>Mental arithmetic</h4><div class="sub-score">🏆 0</div><button class="sub-play-btn">Play</button></div>
+          <div class="sub-game-card brand-g" onclick="window.openGame('sqrt')"><div class="sub-icon">📏</div><h4>Square root</h4><div class="sub-score">🏆 0</div><button class="sub-play-btn">Play</button></div>
+          <div class="sub-game-card brand-g" onclick="window.openGame('calculator')"><div class="sub-icon">🔢</div><h4>Math grid</h4><div class="sub-score">🏆 0</div><button class="sub-play-btn">Play</button></div>
+          <div class="sub-game-card brand-g" onclick="window.openGame('calculator')"><div class="sub-icon">🎯</div><h4>Math pairs</h4><div class="sub-score">🏆 0</div><button class="sub-play-btn">Play</button></div>
+        </div></div></div>
+    
+    <!-- BRAIN MENU -->
+    <div id="screen-menu-brain" class="screen">
+      <div class="game-top"><button class="back-btn" onclick="navTo('screen-home')">←</button><span class="game-score-pill">🏆 <span id="b-score">0</span></span><button class="icon-btn" style="border:2px solid;box-shadow:2px 2px 0;" onclick="openSettings()">⚙️</button></div>
+      <div class="scroll-area"><h1 class="cat-title-big">Train Your Brain</h1><p class="cat-subtitle">Enhance logical thinking, concentration and core cognitive skills.</p>
+        <div class="cat-grid" style="margin-top:20px;">
+          <div class="sub-game-card brand-p" onclick="window.openGame('calculator')"><div class="sub-icon">🔺</div><h4>Magic triangle</h4><div class="sub-score">🏆 0</div><button class="sub-play-btn">Play</button></div>
+          <div class="sub-game-card brand-p" onclick="window.openGame('calculator')"><div class="sub-icon">🧩</div><h4>Picture puzzle</h4><div class="sub-score">🏆 0</div><button class="sub-play-btn">Play</button></div>
+          <div class="sub-game-card brand-p" onclick="window.openGame('calculator')"><div class="sub-icon">📐</div><h4>Number pyramid</h4><div class="sub-score">🏆 0</div><button class="sub-play-btn">Play</button></div>
+          <div class="sub-game-card brand-p" onclick="window.openGame('calculator')"><div class="sub-icon">🎯</div><h4>Numeric memory</h4><div class="sub-score">🏆 0</div><button class="sub-play-btn">Play</button></div>
+        </div></div></div>
+
+    <!-- CALCULATOR GAME (FIGMA ROUNDED) -->
+    <div id="screen-game-calc" class="screen">
+      <div class="game-top"><button class="back-btn" onclick="navTo('screen-menu-math')">←</button><span class="game-name">Calculator</span><button class="icon-btn" style="border:2px solid;box-shadow:2px 2px 0;" onclick="openSettings()">⚙️</button></div>
+      
+      <div class="timer-section">
+         <p class="level-lbl">Level-1</p>
+         <div id="timer-arc" class="timer-arc brand-y"><div id="calc-timer-text" class="timer-lbl">02:25</div></div>
+         <span class="game-score-pill">🏆 <span id="calc-score">0</span></span>
+      </div>
+
+      <div class="eq-wrap">
+         <div id="calc-eq" class="eq-pill">7+6</div>
+         <div id="calc-ans-display" class="ans-pill">?</div>
+      </div>
+
+      <div class="numpad-round">
+        <button onclick="np('7')">7</button><button class="btn-y" onclick="np('8')">8</button><button onclick="np('9')">9</button>
+        <button class="btn-y" onclick="np('4')">4</button><button onclick="np('5')">5</button><button class="btn-y" onclick="np('6')">6</button>
+        <button onclick="np('1')">1</button><button class="btn-y" onclick="np('2')">2</button><button onclick="np('3')">3</button>
+        <button class="n-clear" onclick="np('clear')">Clear</button><button class="btn-y" onclick="np('0')">0</button><button class="n-clear" onclick="submitCalc()">&check;</button>
+      </div>
+    </div>
+
+    <!-- GUESS SIGN GAME -->
+    <div id="screen-game-sign" class="screen">
+      <div class="game-top"><button class="back-btn" onclick="navTo('screen-menu-math')">←</button><span class="game-name">Guess The Sign</span><button class="icon-btn" style="border:2px solid;box-shadow:2px 2px 0;" onclick="openSettings()">⚙️</button></div>
+      <div class="timer-section">
+         <p class="level-lbl">Level-1</p>
+         <div class="timer-arc brand-y"><div id="sign-timer-text" class="timer-lbl">02:25</div></div>
+         <span class="game-score-pill">🏆 <span id="sign-score">0</span></span>
+      </div>
+      <div class="eq-wrap">
+         <div class="eq-pill" style="display:flex;gap:15px;align-items:center;">
+           <span id="s-n1">1</span> 
+           <div class="ans-pill" style="min-width:60px;height:60px;padding:0;">?</div> 
+           <span id="s-n2">6</span> = <span id="s-res">6</span>
+         </div>
+      </div>
+      <div class="sign-options-stack">
+        <button class="btn-y" onclick="chooseSign('/')">/</button>
+        <button class="btn-y" onclick="chooseSign('*')">*</button>
+        <button class="btn-y" onclick="chooseSign('+')">+</button>
+        <button class="btn-y" onclick="chooseSign('-')">-</button>
+      </div>
+    </div>
+
+    <!-- RESULT SCREEN -->
+    <div id="screen-result" class="screen">
+      <div class="scroll-area full-center" style="height:100%;padding:20px 0;">
+        <div class="result-card">
+          <div class="r-trophy">🏆</div><h1 class="r-score" id="res-score">0</h1><p class="r-label">Total Score</p>
+          <div class="r-stats"><div class="stat-i"><div class="stat-v" id="res-correct">0</div><div class="stat-l">Correct</div></div><div class="stat-i"><div class="stat-v" id="res-wrong">0</div><div class="stat-l">Missed</div></div></div>
+          <div class="res-actions" style="display:flex;gap:10px;"><button class="btn-primary ripple" onclick="navTo('screen-home')" style="flex:1;">Home</button><button class="btn-primary ripple" onclick="openGame(window.state.currentGame)" style="flex:2;background:var(--g);color:white;">Play Again</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEADERBOARD SCREEN -->
+    <div id="screen-leaderboard" class="screen has-footer">
+      <div class="game-top"><button class="back-btn" onclick="navTo('screen-home')">←</button><span class="game-name">Global Ranking</span><div class="game-score-pill">Top 10</div></div>
+      <div class="scroll-area"><div class="lb-list-full" id="global-lb-list">Loading...</div></div>
+    </div>
+
+    <!-- SETTINGS SCREEN -->
+    <div id="screen-settings" class="screen has-footer">
+      <div class="game-top"><button class="back-btn" onclick="navTo('screen-home')">←</button><span class="game-name">Settings</span></div>
+      <div class="scroll-area">
+        <div class="settings-list">
+          <div class="settings-item ripple" onclick="toggleTheme()"><div class="s-info"><h4>Dark Mode</h4><p>Toggle Theme</p></div><div class="s-action">🌙</div></div>
+          <div class="settings-item ripple" onclick="toggleSound()"><div class="s-info"><h4>Sound</h4><p id="sound-status">Enabled</p></div><div class="s-action">🔊</div></div>
+        </div>
+        <button class="btn-primary ripple" style="background:var(--r);color:white;margin-top:20px;" onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+
+
+  <script type="module" src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then(reg => console.log('SW Registered!', reg))
+          .catch(err => console.log('SW Reg Failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>
